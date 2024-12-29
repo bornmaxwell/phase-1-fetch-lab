@@ -1,5 +1,13 @@
 function fetchBooks() {
-  // To pass the tests, don't forget to return your fetch!
+  function renderBooks(books) {
+    const bookList = document.getElementById('book-list'); // Assuming there is an element with this ID in the DOM
+    books.forEach((book) => {
+      const li = document.createElement('li');
+      li.textContent = book.name; // Render the book title
+      bookList.appendChild(li);
+    });
+  }
+  
   
 }
 
@@ -15,3 +23,19 @@ function renderBooks(books) {
 document.addEventListener('DOMContentLoaded', function() {
   fetchBooks();
 });
+function fetchBooks() {
+  // Fetch data from the API
+  return fetch('https://anapioficeandfire.com/api/books')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json(); // Parse JSON data
+    })
+    .then((books) => {
+      renderBooks(books); // Pass the data to renderBooks
+    })
+    .catch((error) => {
+      console.error('Error fetching books:', error);
+    });
+}
